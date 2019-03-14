@@ -1,0 +1,34 @@
+<% if current_user %>
+  Hola, <%= current_user.email.split('@')[0] %>!
+  <%= link_to "Salir", logout_path %>
+<% else %>
+  <%= link_to "Iniciar sesión", login_path %>
+  <%= link_to "Crear cuenta", signup_path, hidden:true %>
+<% end %>
+
+
+<hr>
+
+<% if current_user %>
+  <%= form_tag comments_path do |form| %>
+    <%= hidden_field_tag :user_id, value=current_user.id %>
+    <div class="field">
+      <%= label_tag :text, name='Nuevo comentario' %>
+      <%= text_field_tag "text", nil, :placeholder => 'Sólo válido para admin' %>
+    </div>
+
+    <div class="actions">
+      <%= submit_tag "Comentar" %>
+    </div>
+  <% end %>
+
+  <h3>Comentarios hechos por el admin</h3>
+  <ul>
+    <% User.find_by_email("admin@admin.com").comments.each do |c| %>
+      <li><%= c.text %></li>
+    <% end %>
+  </ul>
+
+  <% else %>
+  <h3>Sólo usuarios registrados pueden ver los comentarios</h3>
+<% end %>

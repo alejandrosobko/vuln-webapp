@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  db:
+    image: postgres:9.6-alpine
+    environment:
+      POSTGRES_PASSWORD: development
+      POSTGRES_USER: development
+      POSTGRES_DB: development_db1
+    ports:
+      - "5432:5432"
+volumes:
+  static: {}
+  media: {}
